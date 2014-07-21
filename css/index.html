@@ -1,0 +1,142 @@
+<!doctype html>
+<html dir="ltr" lang="en" class="no-js">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+
+	<title>sprSimple Invoice</title>
+
+	<link rel="stylesheet" href="reset.css" media="all" />
+	<link rel="stylesheet" href="style.css" media="all" />
+	<link rel="stylesheet" href="print.css" media="print" />
+
+	<!-- give life to HTML5 objects in IE -->
+	<!--[if lte IE 8]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+	<!-- js HTML class -->
+	<script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="rivets.js"></script>
+  <script>
+    (function($, exports, undefined) {
+      $('document').ready(function() {
+        rivets.bind($('#invoice'), {
+          invoice: {
+            number: 'invoice number',
+            date: 'invoice date',
+            due_date: 'due date',
+            recipient: {
+              name: 'recipient name',
+              company: 'recipient co',
+              email: 'recipient email'
+            },
+            lineitems: [
+              {
+                description: 'item desc',
+                price: 'item cost'
+              }
+            ],
+            total: 'total cost'
+          }
+        });
+      });
+    })(jQuery, window);
+  </script>
+</head>
+<body>
+<!-- begin markup -->
+
+
+
+<div id="invoice" class="new">
+
+
+	<div class="this-is">
+		<strong>Invoice</strong>
+	</div><!-- invoice headline -->
+
+
+	<header id="header">
+		<dl class="invoice-meta">
+			<dt class="invoice-number">Invoice #</dt>
+			<dd>{ invoice.number }</dd>
+			<dt class="invoice-date">Date of Invoice</dt>
+			<dd>{ invoice.date }</dd>
+			<dt class="invoice-due">Due Date</dt>
+			<dd>{ invoice.due_date }</dd>
+		</dl>
+	</header>
+	<!-- e: invoice header -->
+
+
+	<section id="parties">
+
+		<div class="invoice-to">
+			<h2>Invoice To:</h2>
+			<div class="vcard">
+        { invoice.recipient.name }
+				<div class="org">{ invoice.recipient.company }</div>
+				{ invoice.recipient.email }
+			</div><!-- e: vcard -->
+		</div><!-- e invoice-to -->
+
+
+		<div class="invoice-from">
+			<h2>Invoice From:</h2>
+			<div class="vcard">
+        Brian Zeligson
+				<div class="org"></div>
+        brian.zeligson@gmail.com
+			</div><!-- e: vcard -->
+		</div><!-- e invoice-from -->
+
+	</section><!-- e: invoice partis -->
+
+
+	<section class="invoice-financials">
+
+		<div class="invoice-items">
+			<table>
+				<caption>Your Invoice</caption>
+				<thead>
+					<tr>
+						<th>Item &amp; Description</th>
+						<th>Price (GPL)</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr rv-each-lineitem="invoice.lineitems">
+						<th>{ lineitem.description }</th>
+						<td>${ lineitem.price }</td>
+					</tr>
+				</tbody>
+			</table>
+		</div><!-- e: invoice items -->
+
+
+		<div class="invoice-totals">
+			<table>
+				<caption>Totals:</caption>
+				<tbody>
+					<tr>
+						<th>Total:</th>
+						<td></td>
+						<td>${ invoice.total }</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+	</section><!-- e: invoice financials -->
+
+
+	<footer id="footer">
+	</footer>
+
+
+</div><!-- e: invoice -->
+
+
+</body>
+</html>
